@@ -1,6 +1,7 @@
 # My
 data/
 output/
+*.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
