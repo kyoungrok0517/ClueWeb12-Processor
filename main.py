@@ -53,6 +53,6 @@ def all_partition(values):
 
 fpaths = sorted(glob('../../../Dataset/FACC1/tgz/*.tgz'))
 prepare_output_dirs(fpaths)
-b = db.from_sequence(fpaths[:1]).reduction(each_partition, all_partition)
+b = db.from_sequence(fpaths).reduction(each_partition, all_partition)
 b.compute()
 
