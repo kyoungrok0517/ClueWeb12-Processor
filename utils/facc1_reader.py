@@ -9,4 +9,4 @@ class FACC1Reader(object):
         with tarfile.open(self.fpath, 'r:gz') as tar:
             for member in tar.getmembers():
                 if member.name.endswith('.tsv'):
-                    yield tar.extractfile(member)
+                    yield (member.name.replace('.tsv', ''), tar.extractfile(member))
