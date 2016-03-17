@@ -1,4 +1,4 @@
-# coding: utf-8
+#-*- coding: utf-8 -*-
 from blaze import Data
 from odo import odo
 from pandas import DataFrame
@@ -8,7 +8,7 @@ class FACC1Query(object):
     SERVER_URI = 'postgresql://facc1:Rudfhr88!@server.kyoungrok.com/facc1::{0}'
     
     def __init__(self, collection):
-        self.uri = self.SERVER_URI.format(collection) # clueweb12_00
+        self.uri = self.SERVER_URI.format(collection) # ex: clueweb12_00
         self.facc1 = Data(self.uri)
         
     def __call__(self, trec_id):

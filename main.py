@@ -1,4 +1,4 @@
-# coding: utf-8
+#-*- coding: utf-8 -*-
 import tarfile
 from tarfile import TarInfo
 from glob import glob

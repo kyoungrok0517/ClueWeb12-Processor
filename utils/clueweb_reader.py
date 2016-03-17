@@ -1,10 +1,8 @@
-# coding: utf-8
-
-# In[42]:
-from __future__ import unicode_literals
+#-*- coding: utf-8 -*-
 from __future__ import print_function
 import warc
 from bs4 import BeautifulSoup
+import re
 
 def remove_boilerplate(html):
     soup = BeautifulSoup(html, 'html.parser')
@@ -27,6 +25,7 @@ def remove_boilerplate(html):
 # Record Counts (http://www.lemurproject.org/clueweb12/specs.php)
 class ClueWebReader(object):
     HEADER_OFFSET = 157
+    HEADER_DELIM = '\r\n\r\n'
 
     def __init__(self, fpath):
         # target file path
@@ -42,8 +41,18 @@ class ClueWebReader(object):
         f = warc.open(self.fpath)
         for record in f:
             if record.type == 'response':
-                yield (record.header['WARC-TREC-ID'], record.payload)
+                try:
+                    content = record.payload.read().split(self.HEADER_DELIM)[1:]
+                    content = ''.join(content)
+                    content = unicode(content, encoding='utf-8', errors='replace')
+                    yield (record.header['WARC-TREC-ID'], content)
+                except Exception as e:
+                    print(e)
         f.close()
+        
+    def _get_content_length(self, record):
+        string = record.payload.read()
+        return int(re.search(self.PATTERN, string).group(1))
     
     def get_records(self):
         return iter(self.record_tuples)
