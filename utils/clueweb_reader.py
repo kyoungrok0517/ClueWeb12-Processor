@@ -4,6 +4,11 @@ import warc
 import re
 import codecs
 
+from __future__ import print_function
+import warc
+import re
+import codecs
+
 class ClueWebReader(object):
     
     def __init__(self, fpaths):
@@ -26,8 +31,7 @@ class ClueWebReader(object):
                 if record.type == 'response':
                     try:
                         header = record.header
-#                         content = record.payload.read()
-                        content = unicode(record.payload.read(), encoding='utf-8', errors='replace')
+                        content = record.payload.read()
                         yield (header, content)
                     except Exception as e:
                         print(e)
